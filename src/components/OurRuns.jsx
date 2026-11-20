@@ -3,8 +3,54 @@ import easyRunsImage from '../assets/easy-runs.jpg'
 import tempoRunsImage from '../assets/tempo-runs.jpg'
 import longRunsImage from '../assets/long-runs.jpg'
 import communityRunsImage from '../assets/community-runs.jpg'
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 function OurRuns() {
+  const sectionRef = useRef(null)
+
+useEffect(() => {
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches
+
+  if (prefersReducedMotion) return
+
+  const ctx = gsap.context(() => {
+    const timeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top 75%',
+        once: true,
+      },
+    })
+
+    timeline.from('[data-runs-heading]', {
+      y: 40,
+      autoAlpha: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+    })
+
+    timeline.from(
+      '[data-run-card]',
+      {
+        y: 50,
+        autoAlpha: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out',
+      },
+      '-=0.3'
+    )
+  }, sectionRef)
+
+  return () => ctx.revert()
+}, [])
+
   const runs = [
     {
       number: '01',
@@ -45,11 +91,15 @@ function OurRuns() {
   ]
 
   return (
-    <section className="bg-[#F5F5F0] px-6 py-16 sm:px-10 sm:py-20 md:px-[5.6%]">
+    <section 
+      ref={sectionRef}
+      className="bg-[#F5F5F0] px-6 py-16 sm:px-10 sm:py-20 md:px-[5.6%]">
       <div className="w-full">
 
         {/* Section heading */}
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div   
+          data-runs-heading
+          className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <h2 className="font-display text-3xl font-extrabold uppercase leading-[1.01] tracking-tight text-[#0B0B0B] sm:text-xl lg:text-[60px]">
             Find your
             <br />
@@ -66,14 +116,13 @@ function OurRuns() {
         {/* Run cards */}
         <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:mt-[112px] lg:grid-cols-4 lg:gap-6">
           {runs.map((run) => (
-            <article key={run.number} className="min-w-0">
-
+            <article key={run.number} data-run-card className="min-w-0">
               {/* Card image */}
               <div className="overflow-hidden">
                 <img
                   src={run.image}
                   alt={run.alt}
-                  className="aspect-[320/340] w-full object-cover transition-transform duration-[350ms] ease-out hover:scale-[1.04]"
+                  className="aspect-[320/340] w-full object-cover transition-transform duration-700 ease-out hover:scale-105"
                 />
               </div>
 
