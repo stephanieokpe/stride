@@ -1,3 +1,4 @@
+import aboutImage from '../assets/shared miles.jpg'
 
 function About() {
   return (
@@ -19,7 +20,7 @@ function About() {
           {/* About image */}
           <div className="overflow-hidden">
             <img
-              src="/src/assets/shared miles.jpg"
+              src="{aboutImage}"
               alt="A group of runners sharing the road"
               className="h-full min-h-[280px] w-full object-cover lg:aspect-[820/450]"
             />

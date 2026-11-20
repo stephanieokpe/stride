@@ -88,7 +88,7 @@ function OurRuns() {
               </p>
 
               <p className="mt-5 font-body text-xs font-semibold tracking-wide text-[#0B0B0B]">
-                {run.details} <span className="text-[#FF5A1F]">↗</span>
+                {run.details} 
               </p>
 
             </article>

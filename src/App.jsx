@@ -11,7 +11,7 @@ import Footer from './components/Footer'
 function App() {
   return (
     <>
-      <main className="relative min-h-[1024px] overflow-hidden bg-[#0B0B0B]">
+      <main className="relative min-h-[720px] sm:min-h-[820px] lg:min-h-[1024px] overflow-hidden bg-[#0B0B0B]">
         <Hero />
         <Navbar />
         <Ticker />
