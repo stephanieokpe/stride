@@ -2,17 +2,81 @@
 import crewImage from '../assets/community-crew.jpg'
 import connectionImage from '../assets/community-connection.jpg'
 import strideImage from '../assets/community-stride.jpg'
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 function Community() {
+  const sectionRef = useRef(null)
+
+useEffect(() => {
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches
+
+  if (prefersReducedMotion) return
+
+  const ctx = gsap.context(() => {
+
+    // Section heading
+    gsap.from('[data-community-heading]', {
+      y: 40,
+      autoAlpha: 0,
+      duration: 0.9,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top 75%',
+        once: true,
+      },
+    })
+
+    // Community images
+    gsap.from('[data-community-image]', {
+      y: 50,
+      autoAlpha: 0,
+      scale: 0.96,
+      duration: 1,
+      stagger: 0.2,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top 65%',
+        once: true,
+      },
+    })
+
+    // Supporting text
+    gsap.from('[data-community-content]', {
+      y: 30,
+      autoAlpha: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top 55%',
+        once: true,
+      },
+    })
+
+  }, sectionRef)
+
+  return () => ctx.revert()
+}, [])
+
   return (
-    <section className="bg-[#C8F135] px-6 py-16 sm:px-10 sm:py-20 md:px-[5.6%]">
+    <section 
+    ref={sectionRef}
+     className="bg-[#C8F135] px-6 py-16 sm:px-10 sm:py-20 md:px-[5.6%]">
 
       <div className="w-full">
 
         {/* Heading and supporting text */}
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
 
-          <h2 className="font-display text-3xl font-extrabold uppercase leading-[1.01] tracking-tight text-[#0B0B0B] sm:text-xl lg:text-[60px]">
+          <h2 data-community-heading className="font-display text-3xl font-extrabold uppercase leading-[1.01] tracking-tight text-[#0B0B0B] sm:text-xl lg:text-[60px]">
             Different paces.
             <br />
             One <span className="font-accent italic">community.</span>
@@ -28,7 +92,7 @@ function Community() {
 
         
 {/* Image layout */}
-<div className="mt-10 grid grid-cols-1 gap-5 sm:gap-6 lg:mt-0 lg:grid-cols-[1.614fr_1fr] lg:gap-6 lg:items-start">
+<div data-community-image className="mt-10 grid grid-cols-1 gap-5 sm:gap-6 lg:mt-0 lg:grid-cols-[1.614fr_1fr] lg:gap-6 lg:items-start">
 
   {/* Left column: main image and statement */}
   <div className="lg:mt-[60px]">
@@ -41,7 +105,7 @@ function Community() {
     </div>
 
     {/* Statement directly below main image */}
-    <div className="mt-8 max-w-[820px]">
+    <div data-community-content className="mt-8 max-w-[820px]">
       <h3 className="font-display text-xl font-extrabold uppercase leading-[1.01] tracking-tight text-[#0B0B0B] sm:text-xl">
         No one runs alone.
       </h3>
