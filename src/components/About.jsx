@@ -20,7 +20,7 @@ function About() {
           {/* About image */}
           <div className="overflow-hidden">
             <img
-              src="{aboutImage}"
+              src={aboutImage}
               alt="A group of runners sharing the road"
               className="h-full min-h-[280px] w-full object-cover lg:aspect-[820/450]"
             />
